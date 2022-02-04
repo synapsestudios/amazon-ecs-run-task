@@ -1,0 +1,21 @@
+{
+  "name": "amazon-ecs-run-task",
+  "version": "1.0.0",
+  "description": "Runs an Amazon ECS task",
+  "main": "index.js",
+  "scripts": {
+    "build": "ncc build index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@actions/core": "^1.6.0",
+    "@actions/github": "^5.0.0",
+    "aws-sdk": "^2.1046.0"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.33.0"
+  }
+}
