@@ -1,5 +1,5 @@
 name: 'Amazon ECS "Run Task" Action for GitHub Actions'
-description: 'Runs a task definition on an ECS cluster as a one-off task'
+description: "Runs a task definition on an ECS cluster as a one-off task"
 inputs:
   task-definition:
     description: "The family and revision (family:revision) or full ARN of the task definition to run. If a revision isn't specified, the latest ACTIVE revision is used."
@@ -8,20 +8,20 @@ inputs:
     description: "The short name or full Amazon Resource Name (ARN) of the cluster to run your task on. If you do not specify a cluster, the default cluster is assumed."
     required: false
   launch-type:
-    description: 'The infrastructure to run your standalone task on. For more information, see Amazon ECS launch types in the Amazon Elastic Container Service Developer Guide.'
+    description: "The infrastructure to run your standalone task on. For more information, see Amazon ECS launch types in the Amazon Elastic Container Service Developer Guide."
     required: false
   network-configuration:
     description: "The network configuration for the task. This parameter is required for task definitions that use the awsvpc network mode to receive their own elastic network interface, and it isn't supported for other network modes. For more information, see Task networking in the Amazon Elastic Container Service Developer Guide."
     required: false
   wait-for-tasks-stopped:
-    description: 'Whether to wait for task to stop'
+    description: "Whether to wait for task to stop"
     required: false
   overrides:
-    description: 'The overrides for the task'
+    description: "The overrides for the task"
     required: false
 outputs:
   task-definition:
-    description: 'The path to the rendered task definition file'
+    description: "The path to the rendered task definition file"
 runs:
-  using: 'node12'
-  main: 'dist/index.js'
+  using: "node20"
+  main: "dist/index.js"
