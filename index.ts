@@ -1,5 +1,5 @@
-const core = require("@actions/core");
-const aws = require("aws-sdk");
+import core from "@actions/core";
+import aws from "aws-sdk";
 
 async function run() {
   try {
