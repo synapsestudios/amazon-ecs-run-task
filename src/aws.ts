@@ -1,3 +1,5 @@
+// It's necessary to import the entire AWS SDK
+// in order for aws-sdk-mock to work
 import AWS from "aws-sdk";
 
 export type AwsOptions = {
