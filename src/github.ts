@@ -1,4 +1,4 @@
-import { setFailed, getInput } from "@actions/core";
+import { getInput, setFailed } from "@actions/core";
 
 export const setGhaFailure = (err: unknown) => {
   if (err instanceof Error) {

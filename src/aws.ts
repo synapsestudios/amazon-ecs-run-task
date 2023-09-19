@@ -1,11 +1,11 @@
-import type { ECS } from "aws-sdk";
+import AWS from "aws-sdk";
 
 export type AwsOptions = {
   onDebug?: (message: string) => void;
   onFailure?: (err: unknown) => void;
 };
 
-export const hasTaskFailures = (tasks?: ECS.Task[]) => {
+export const hasTaskFailures = (tasks?: AWS.ECS.Task[]) => {
   if (!tasks?.length) {
     return false;
   }
@@ -19,8 +19,8 @@ export const hasTaskFailures = (tasks?: ECS.Task[]) => {
 };
 
 export const runTasks = async (
-  client: ECS,
-  params: ECS.RunTaskRequest,
+  client: AWS.ECS,
+  params: AWS.ECS.RunTaskRequest,
   { onDebug }: AwsOptions = {}
 ) => {
   console.log(`Running task ${params.taskDefinition}`);
@@ -40,8 +40,8 @@ export const runTasks = async (
 };
 
 export const waitForTasks = async (
-  client: ECS,
-  params: ECS.DescribeTasksRequest,
+  client: AWS.ECS,
+  params: AWS.ECS.DescribeTasksRequest,
   { onDebug, onFailure }: AwsOptions = {}
 ) => {
   console.log("Waiting for task to stop");

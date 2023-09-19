@@ -1,10 +1,10 @@
-import { ECS } from "aws-sdk";
-import { getActionInputs, setGhaFailure } from "./github";
-import { runTasks, waitForTasks } from "./aws";
 import { debug } from "@actions/core";
+import AWS from "aws-sdk";
+import { runTasks, waitForTasks } from "./aws";
+import { getActionInputs, setGhaFailure } from "./github";
 
 async function run(
-  client: ECS,
+  client: AWS.ECS,
   options = { onDebug: debug, onFailure: setGhaFailure }
 ) {
   const { wait, ...runTaskParams } = getActionInputs();
@@ -29,6 +29,6 @@ async function run(
   }
 }
 
-const ecs = new ECS({ apiVersion: "2014-11-13" });
+const ecs = new AWS.ECS({ apiVersion: "2014-11-13" });
 
 run(ecs);
