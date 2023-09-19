@@ -2,9 +2,9 @@
   "name": "amazon-ecs-run-task",
   "version": "1.0.0",
   "description": "Runs an Amazon ECS task",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "build": "ncc build index.ts",
+    "build": "ncc build src/*.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
