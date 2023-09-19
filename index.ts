@@ -4,9 +4,11 @@ import aws from "aws-sdk";
 async function run() {
   try {
     const taskDefinition = core.getInput("task-definition");
+
     if (!taskDefinition) {
       throw new Error("Task definition not specified");
     }
+
     const cluster = core.getInput("cluster");
     const launchType = core.getInput("launch-type");
     const networkConfiguration = core.getInput("network-configuration");
@@ -15,7 +17,7 @@ async function run() {
 
     const ecs = new aws.ECS({ apiVersion: "2014-11-13" });
 
-    const runTaskParams = { taskDefinition };
+    const runTaskParams: aws.ECS.RunTaskRequest = { taskDefinition };
 
     if (cluster) {
       runTaskParams.cluster = cluster;
@@ -42,8 +44,12 @@ async function run() {
     console.log(`Successfully scheduled task ${taskDefinition}`);
 
     if (wait) {
-      const waitParams = {
-        tasks: runTaskResult.tasks.map((task) => task.taskArn),
+      const waitParams: aws.ECS.DescribeTasksRequest = {
+        tasks: !!runTaskResult.tasks?.length
+          ? runTaskResult.tasks
+              .map((task) => task.taskArn)
+              .filter((arn): arn is string => typeof arn === "string" && !!arn)
+          : [],
       };
 
       if (cluster) {
@@ -58,9 +64,13 @@ async function run() {
 
       core.debug(JSON.stringify(waitResult, null, 2));
 
-      const hasFailures = waitResult.tasks.some((task) =>
-        task.containers.some((container) => !!container.exitCode)
-      );
+      const hasFailures =
+        !!waitResult.tasks?.length &&
+        waitResult.tasks.some(
+          (task) =>
+            !!task.containers?.length &&
+            task.containers.some((container) => !!container.exitCode)
+        );
 
       if (hasFailures) {
         core.setFailed("Some containers exited with non-zero exit codes");
