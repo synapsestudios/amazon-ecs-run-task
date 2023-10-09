@@ -58,11 +58,19 @@ async function run() {
 
       core.debug(JSON.stringify(waitResult, null, 2));
 
-      const hasFailures = waitResult.tasks.some((task) =>
+      const containerExitedWithError = waitResult.tasks.some((task) =>
         task.containers.some((container) => !!container.exitCode)
       );
 
-      if (hasFailures) {
+      const unableToStart = waitResult.tasks.some(
+        (task) => task.stopCode === "TaskFailedToStart"
+      );
+
+      if (unableToStart) {
+        core.setFailed("Some containers failed to start");
+      }
+
+      if (containerExitedWithError) {
         core.setFailed("Some containers exited with non-zero exit codes");
       }
     }
