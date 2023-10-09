@@ -66,7 +66,7 @@ async function run() {
         (task) => task.stopCode === "TaskFailedToStart"
       );
 
-      console.log(unableToStart, containerExitedWithError);
+      core.debug(unableToStart, containerExitedWithError);
 
       if (unableToStart) {
         core.setFailed("Some containers failed to start");
